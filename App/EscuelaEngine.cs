@@ -5,7 +5,7 @@ using CorEscuela.Entidades;
 
 namespace CorEscuela
 {
-    public class EscuelaEngine
+    public sealed class EscuelaEngine //"Sealed" Sella la clase para que permita instanciar pero no heredar
     {
         public Escuela Escuela { get; private set; }
 
@@ -115,6 +115,28 @@ namespace CorEscuela
                 c.Alumnos = GenerarAlumnosAlAzar(canRandom);
             }
         }
+
+        public List<ObjetoEscuelaBase> GetObjectosEscuela()
+        {
+            var listaObj = new List<ObjetoEscuelaBase>();
+
+            listaObj.Add(Escuela);
+            listaObj.AddRange(Escuela.Cursos);
+
+            foreach (var Curso in Escuela.Cursos)
+            {
+                listaObj.AddRange(Curso.Asignaturas);
+                listaObj.AddRange(Curso.Alumnos);
+            }
+
+            // foreach (var alumno in Curso.Alumnos)
+            // {
+            //     listaObj.AddRange(alumno.Evaluaciones);
+            // }
+
+            return listaObj;
+        }
+
     }
 
 }

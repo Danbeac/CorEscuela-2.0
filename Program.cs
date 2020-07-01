@@ -14,20 +14,23 @@ namespace CorEscuela
             Engine.Inicializar();
             Printer.PrintTitle("BIENVENIDOS A LA ESCUELA");
             Printer.Beep();
+            var lista = Engine.GetObjectosEscuela();
 
             ImprimirCursosEscuela(Engine.Escuela);
             ImprimirEvaluaciones(Engine.Escuela);
+
+            Engine.Escuela.LimpiarLugar();
         }
 
         private static void ImprimirEvaluaciones(Escuela escuela)
         {
-            foreach(var curso in escuela.Cursos)
+            foreach(var curso in Escuela.Cursos)
             {
                 foreach (var materia in curso.Asignaturas)
                 {
                     foreach (var evaluation in materia.Evaluacion)
                     {
-                        WriteLine($"{evaluation.Nombre} - {evaluation.Alumno} - {evaluation.Asignatura} {evaluation.Nota}");
+                        WriteLine($"{evaluation.Nombre} - {evaluation.Alumno.Nombre} - {evaluation.Asignatura} {evaluation.Nota}");
                     }
                 }
             }
@@ -50,13 +53,13 @@ namespace CorEscuela
             // WriteLine("                           Cursos de la escuela                     ");
             // Printer.DibujarLinea(90);
             Printer.PrintTitle("Cursos de la escuela");
-            if (escuela?.Cursos == null) 
+            if (Escuela.Cursos == null) 
             {
                 return;
             }
             else
             {
-                foreach (var curso in escuela.Cursos)
+                foreach (var curso in Escuela.Cursos)
                 {
                     Console.WriteLine($"Nombre:{curso.Nombre} - ID:{curso.UniqueId} - Jornada:{curso.Jornada}");
                 }
