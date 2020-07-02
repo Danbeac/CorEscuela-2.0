@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CorEscuela.Entidades;
 using CorEscuela.Util;
 using static System.Console;
@@ -14,12 +15,14 @@ namespace CorEscuela
             Engine.Inicializar();
             Printer.PrintTitle("BIENVENIDOS A LA ESCUELA");
             Printer.Beep();
+            
             var lista = Engine.GetObjectosEscuela();
+
 
             ImprimirCursosEscuela(Engine.Escuela);
             ImprimirEvaluaciones(Engine.Escuela);
 
-            Engine.Escuela.LimpiarLugar();
+            Engine.Escuela.LimpiarLugar(); 
         }
 
         private static void ImprimirEvaluaciones(Escuela escuela)

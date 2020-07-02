@@ -18,8 +18,8 @@ namespace CorEscuela.Entidades
 
         public Curso(string nombre, TiposJornada tipoJornada)
         {
-             //this.Nombre = nombre;
-            // this.Jornada = tipoJornada;
+            this.Nombre = nombre;
+            this.Jornada = tipoJornada;
             // this.UniqueId = Guid.NewGuid().ToString();
         }
 
@@ -30,6 +30,12 @@ namespace CorEscuela.Entidades
             Console.WriteLine($"Curso {Nombre} Limpio");
 
         }
+        
+        public override string ToString()
+        {
+            return $"{Nombre} - {Jornada}";
+        }
+
     }
 
 }
