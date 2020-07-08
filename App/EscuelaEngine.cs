@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CorEscuela.Entidades;
+using CorEscuela.Util;
 
 namespace CorEscuela
 {
@@ -39,7 +40,7 @@ namespace CorEscuela
         }
         #region SobreCarga de Metodos
         // Con 3 parametro de salida
-        public List<ObjetoEscuelaBase> GetObjectosEscuela(out int conteoEvaluaciones,
+        public IReadOnlyList<ObjetoEscuelaBase> GetObjectosEscuela(out int conteoEvaluaciones,
                                                           out int conteoAlumnos,
                                                           out int conteoAsignaturas,
                                                           bool traeEvaluaciones = true,
@@ -51,7 +52,7 @@ namespace CorEscuela
             return GetObjectosEscuela(out conteoEvaluaciones, out conteoAlumnos, out conteoAsignaturas, out int dummy);
         }
         // Con 2 parametro de salida
-        public List<ObjetoEscuelaBase> GetObjectosEscuela(out int conteoEvaluaciones,
+        public IReadOnlyList<ObjetoEscuelaBase> GetObjectosEscuela(out int conteoEvaluaciones,
                                                           out int conteoAlumnos,
                                                           bool traeEvaluaciones = true,
                                                           bool traeAlumnos = true,
@@ -61,8 +62,8 @@ namespace CorEscuela
         {
             return GetObjectosEscuela(out conteoEvaluaciones, out conteoAlumnos, out int dummy, out dummy);
         }
-         // Con 1 parametro de salida
-        public List<ObjetoEscuelaBase> GetObjectosEscuela(out int conteoEvaluaciones,
+        // Con 1 parametro de salida
+        public IReadOnlyList<ObjetoEscuelaBase> GetObjectosEscuela(out int conteoEvaluaciones,
                                                           bool traeEvaluaciones = true,
                                                           bool traeAlumnos = true,
                                                           bool traeAsignaturas = true,
@@ -72,7 +73,7 @@ namespace CorEscuela
             return GetObjectosEscuela(out conteoEvaluaciones, out int dummy, out dummy, out dummy);
         }
         // Sin parametro de salida
-        public List<ObjetoEscuelaBase> GetObjectosEscuela(
+        public IReadOnlyList<ObjetoEscuelaBase> GetObjectosEscuela(
                                                           bool traeEvaluaciones = true,
                                                           bool traeAlumnos = true,
                                                           bool traeAsignaturas = true,
@@ -81,7 +82,7 @@ namespace CorEscuela
         {
             return GetObjectosEscuela(out int dummy, out dummy, out dummy, out dummy);
         }
-        public List<ObjetoEscuelaBase> GetObjectosEscuela(out int conteoEvaluaciones,
+        public IReadOnlyList<ObjetoEscuelaBase> GetObjectosEscuela(out int conteoEvaluaciones,
                                                           out int conteoAlumnos,
                                                           out int conteoAsignaturas,
                                                           out int conteoCursos,
@@ -120,8 +121,55 @@ namespace CorEscuela
                 }
             }
 
-            return listaObj;
+            return listaObj.AsReadOnly();
         }
+
+        public Dictionary<LlavesDiccionario, IEnumerable<ObjetoEscuelaBase>> GetDiccionarioObjetos()
+        {
+
+            var Diccionario = new Dictionary<LlavesDiccionario, IEnumerable<ObjetoEscuelaBase>>();
+            var evaltmp = new List<Evaluación>();
+            var asigtmp = new List<Asignatura>();
+            var alumtmp = new List<Alumno>();
+
+            Diccionario.Add(LlavesDiccionario.Curso, Escuela.Cursos);
+
+            foreach (var c in Escuela.Cursos)
+            {
+                asigtmp.AddRange(c.Asignaturas);
+                alumtmp.AddRange(c.Alumnos);
+
+                foreach (var a in c.Alumnos)
+                {
+                    evaltmp.AddRange(a.Evaluaciones);
+                }
+
+            }
+
+            Diccionario.Add(LlavesDiccionario.Evaluación, evaltmp);
+            Diccionario.Add(LlavesDiccionario.Asignatura, asigtmp);
+            Diccionario.Add(LlavesDiccionario.Alumno, alumtmp);
+
+            //Cast
+            //Diccionario.Add(LlavesDiccionario.Curso, Escuela.Cursos.Cast<ObjetoEscuelaBase>());
+
+            return Diccionario;
+
+        }
+
+        public void ImprimirDiccionario(Dictionary<LlavesDiccionario, IEnumerable<ObjetoEscuelaBase>> diccionario)
+        {
+            foreach (var obj in diccionario)
+            {
+                Printer.PrintTitle(obj.Key.ToString());
+
+                foreach (var val in obj.Value)
+                {
+                    Console.WriteLine(val);
+                }
+            }
+        }
+
         #endregion
 
         #region Metodos de Carga

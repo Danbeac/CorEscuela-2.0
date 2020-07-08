@@ -15,19 +15,22 @@ namespace CorEscuela
             Engine.Inicializar();
             Printer.PrintTitle("BIENVENIDOS A LA ESCUELA");
             Printer.Beep();
-            
+
             var lista = Engine.GetObjectosEscuela();
 
 
             ImprimirCursosEscuela(Engine.Escuela);
             ImprimirEvaluaciones(Engine.Escuela);
 
-            Engine.Escuela.LimpiarLugar(); 
+            Engine.Escuela.LimpiarLugar();
+            //ImprimirDatosDiccionario();
+            var dicttmp = Engine.GetDiccionarioObjetos();
+            Engine.ImprimirDiccionario(dicttmp);
         }
 
         private static void ImprimirEvaluaciones(Escuela escuela)
         {
-            foreach(var curso in Escuela.Cursos)
+            foreach (var curso in Escuela.Cursos)
             {
                 foreach (var materia in curso.Asignaturas)
                 {
@@ -41,7 +44,8 @@ namespace CorEscuela
 
         public static bool Apuntador(Curso CursoObjeto)
         {
-            if(CursoObjeto.Nombre == "601"){
+            if (CursoObjeto.Nombre == "601")
+            {
                 return true;
             }
             else
@@ -56,7 +60,7 @@ namespace CorEscuela
             // WriteLine("                           Cursos de la escuela                     ");
             // Printer.DibujarLinea(90);
             Printer.PrintTitle("Cursos de la escuela");
-            if (Escuela.Cursos == null) 
+            if (Escuela.Cursos == null)
             {
                 return;
             }
@@ -66,7 +70,7 @@ namespace CorEscuela
                 {
                     Console.WriteLine($"Nombre:{curso.Nombre} - ID:{curso.UniqueId} - Jornada:{curso.Jornada}");
                 }
-            Printer.DibujarLinea(80);
+                Printer.DibujarLinea(80);
             }
         }
 
@@ -129,7 +133,29 @@ namespace CorEscuela
         }
         #endregion
 
+        private static void ImprimirDatosDiccionario()
+        {
 
+            Dictionary<int, string> Diccionario = new Dictionary<int, string>();
+
+            Diccionario.Add(1, "Daniel Bernal");
+            Diccionario.Add(2, "Santiago Espinosa");
+            Diccionario.Add(3, "Leonidas Barriga");
+
+            Printer.PrintTitle("Impresion de Datos Diccionario");
+
+            foreach (var KeyValPar in Diccionario)
+            {
+                WriteLine($"Key: {KeyValPar.Key} Valor: {KeyValPar.Value}");
+            }
+
+            WriteLine(Diccionario[1]);
+
+            Diccionario[4] = "Mario Yepes";
+            WriteLine(Diccionario[4]);
+        }
+
+        
 
     }
 }
