@@ -4,7 +4,7 @@ using System.Linq;
 using CorEscuela.Entidades;
 using CorEscuela.Util;
 
-namespace CorEscuela
+namespace CorEscuela.App
 {
     public sealed class EscuelaEngine //"Sealed" Sella la clase para que permita instanciar pero no heredar
     {
@@ -228,7 +228,7 @@ namespace CorEscuela
                                 {
                                     Nombre = arraEvaluaciones[itinerador],
                                     Nota = NotaFinal,
-                                    Asignatura = materia.Nombre,
+                                    Asignatura = asignatura,
                                     Alumno = alumno
                                 };
                                 itinerador++;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CorEscuela.Entidades;
 using CorEscuela.Util;
+using CorEscuela.App;
 using static System.Console;
 
 namespace CorEscuela
@@ -18,7 +19,6 @@ namespace CorEscuela
 
             var lista = Engine.GetObjectosEscuela();
 
-
             ImprimirCursosEscuela(Engine.Escuela);
             ImprimirEvaluaciones(Engine.Escuela);
 
@@ -26,6 +26,11 @@ namespace CorEscuela
             //ImprimirDatosDiccionario();
             var dicttmp = Engine.GetDiccionarioObjetos();
             Engine.ImprimirDiccionario(dicttmp,true);
+
+            var Reporteador = new Reporteador(dicttmp);
+            var EvalList = Reporteador.GetListaEvaluaciones();
+            var AsigList = Reporteador.GetListaAsignaturas();
+            var ListEvalxAsig = Reporteador.GetEvalXAsig();
         }
 
         private static void ImprimirEvaluaciones(Escuela escuela)
