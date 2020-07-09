@@ -216,9 +216,7 @@ namespace CorEscuela.App
                             int itinerador = 0;
                             
                             double RandomNota = numRandomNota.NextDouble() * 5;
-                            float NotaFinal = 
-                            
-                            MathF.Round(Convert.ToSingle(RandomNota),2);
+                            float NotaFinal = MathF.Round(Convert.ToSingle(RandomNota),2);
 
                             Evaluación Evaluacion = new Evaluación();
 
