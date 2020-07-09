@@ -28,9 +28,9 @@ namespace CorEscuela
 
         private List<Alumno> GenerarAlumnosAlAzar(int Cantidad)
         {
-            String[] arrPmrNombre = { "Lucia", "Diego", "Yineth", "Michell", "Daniel", "Paula", "Juanita" };
-            String[] arrPmrApellido = { "Castizo", "Sabogal", "Diaz", "Torres", "Bernal", "Gomez", "DelArco" };
-            String[] arrSgdNombre = { "Pedro", "Mateo", "Teodoro", "John", "Sebastian", "Juan", "Miguel" };
+            String[] arrPmrNombre = { "Lucia", "Diego", "Yineth", "Daniel"};
+            String[] arrPmrApellido = { "Castizo", "Sabogal", "Diaz", "Bernal" };
+            String[] arrSgdNombre = { "Pedro", "Mateo", "Teodoro", "John" };
 
             var listaAlumnos = from n1 in arrPmrNombre
                                from n2 in arrSgdNombre
@@ -157,15 +157,40 @@ namespace CorEscuela
 
         }
 
-        public void ImprimirDiccionario(Dictionary<LlavesDiccionario, IEnumerable<ObjetoEscuelaBase>> diccionario)
+        public void ImprimirDiccionario(Dictionary<LlavesDiccionario, IEnumerable<ObjetoEscuelaBase>> diccionario,
+                                        bool impEval = false)
         {
-            foreach (var obj in diccionario)
+            foreach (var objDicc in diccionario)
             {
-                Printer.PrintTitle(obj.Key.ToString());
 
-                foreach (var val in obj.Value)
+                Printer.PrintTitle(objDicc.Key.ToString());
+
+                foreach (var val in objDicc.Value)
                 {
-                    Console.WriteLine(val);
+                    switch (objDicc.Key)
+                    {
+                        case LlavesDiccionario.Evaluación:
+                            if (impEval)
+                            {
+                                Console.WriteLine(val);
+                            }
+                            break;
+                        case LlavesDiccionario.Alumno:
+                            Console.WriteLine("Alumno: " + val.Nombre);
+                            break;
+                        case LlavesDiccionario.Curso:
+                            var cursotmp = val as Curso;
+                            if (cursotmp != null)
+                            {
+                                int count = cursotmp.Alumnos.Count();
+                                Console.WriteLine("Curso: " + val.Nombre + " Cantidad: " + count);
+                            }
+                            break;
+                        default:
+                            Console.WriteLine(val);
+                            break;
+                    }
+
                 }
             }
         }
@@ -176,6 +201,7 @@ namespace CorEscuela
         private void CargarEvaluaciones()
         {
             string[] arraEvaluaciones = { "Parcial Week 1", "Parcial Week 2", "Parcial Week 3", "Parcial Week 4", "Parcial Final" };
+            Random numRandomNota = new Random();
 
             foreach (var curso in Escuela.Cursos)
             {
@@ -188,9 +214,11 @@ namespace CorEscuela
                         foreach (var materia in curso.Asignaturas)
                         {
                             int itinerador = 0;
-                            Random numRandomNota = new Random();
+                            
                             double RandomNota = numRandomNota.NextDouble() * 5;
-                            float NotaFinal = Convert.ToSingle(RandomNota);
+                            float NotaFinal = 
+                            
+                            MathF.Round(Convert.ToSingle(RandomNota),2);
 
                             Evaluación Evaluacion = new Evaluación();
 
@@ -246,7 +274,7 @@ namespace CorEscuela
 
             foreach (var c in Escuela.Cursos)
             {
-                int canRandom = rmd.Next(5, 20);
+                int canRandom = rmd.Next(1, 10);
                 c.Alumnos = GenerarAlumnosAlAzar(canRandom);
             }
         }

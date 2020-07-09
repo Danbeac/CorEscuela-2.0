@@ -25,7 +25,7 @@ namespace CorEscuela
             Engine.Escuela.LimpiarLugar();
             //ImprimirDatosDiccionario();
             var dicttmp = Engine.GetDiccionarioObjetos();
-            Engine.ImprimirDiccionario(dicttmp);
+            Engine.ImprimirDiccionario(dicttmp,true);
         }
 
         private static void ImprimirEvaluaciones(Escuela escuela)
