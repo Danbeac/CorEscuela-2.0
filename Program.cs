@@ -12,25 +12,85 @@ namespace CorEscuela
     {
         static void Main(string[] args)
         {
+            string rta = SeleccionReporte();
+            GenerarReporte(rta);
+
+            // var Engine = new EscuelaEngine();
+            // Engine.Inicializar();
+            // Printer.PrintTitle("BIENVENIDOS A LA ESCUELA");
+            // Printer.Beep();
+
+            // var lista = Engine.GetObjectosEscuela();
+
+            // ImprimirCursosEscuela(Engine.Escuela);
+            // ImprimirEvaluaciones(Engine.Escuela);
+
+            // Engine.Escuela.LimpiarLugar();
+            // //ImprimirDatosDiccionario();
+            // var dicttmp = Engine.GetDiccionarioObjetos();
+            // Engine.ImprimirDiccionario(dicttmp,true);
+
+            // var Reporteador = new Reporteador(dicttmp);
+            // var EvalList = Reporteador.GetListaEvaluaciones();
+            // var AsigList = Reporteador.GetListaAsignaturas();
+            // var ListEvalxAsig = Reporteador.GetEvalXAsig();
+        }
+
+        private static void GenerarReporte(string reporte)
+        {
             var Engine = new EscuelaEngine();
-            Engine.Inicializar();
-            Printer.PrintTitle("BIENVENIDOS A LA ESCUELA");
-            Printer.Beep();
-
-            var lista = Engine.GetObjectosEscuela();
-
-            ImprimirCursosEscuela(Engine.Escuela);
-            ImprimirEvaluaciones(Engine.Escuela);
-
-            Engine.Escuela.LimpiarLugar();
-            //ImprimirDatosDiccionario();
             var dicttmp = Engine.GetDiccionarioObjetos();
-            Engine.ImprimirDiccionario(dicttmp,true);
 
             var Reporteador = new Reporteador(dicttmp);
-            var EvalList = Reporteador.GetListaEvaluaciones();
-            var AsigList = Reporteador.GetListaAsignaturas();
-            var ListEvalxAsig = Reporteador.GetEvalXAsig();
+
+
+            switch (reporte)
+            {
+                case "1":
+                    Console.WriteLine("Inicializando Reporte Evaluaciones..");
+                    Reporteador.GetListaEvaluaciones();
+                    Console.WriteLine("Terminado Reporte Evaluaciones.");
+                    break; 
+                case "2":
+                    Console.WriteLine("Inicializando Reporte Asignaturas..");
+                    Reporteador.GetListaAsignaturas();
+                    Console.WriteLine("Terminado Reporte Asignaturas.");
+                    break;
+                case "3":
+                    Console.WriteLine("Inicializando Reporte Evaluaciones por asignatura..");
+                    Reporteador.GetEvalXAsig();
+                    Console.WriteLine("Terminado Reporte Evaluaciones por asignatura.");
+                    break;
+                case "4":
+                    Console.WriteLine("Inicializando Reporte Promedio de alumnos por asignatura..");
+                    Reporteador.GetPromeAlumnPorAsignatura();
+                    Console.WriteLine("Terminado Reporte Promedio de alumnos por asignatura.");
+                    break;
+                default:
+                    Console.WriteLine("No se ha seleccionado una opcion valida para algún Reporte");
+                    break;
+            }
+        }
+
+        private static string SeleccionReporte()
+        {
+            string Respond = "";
+
+            Printer.PrintTitle("BIENVENIDO AL ASISTENTE DE REPORTES");
+            Console.WriteLine("Seleccione una de las siguientes opciones: ");
+            string[] Opciones = { "[1] Lista de Evaluaciones", "[2] Lista de Asignaturas", "[3] Lista de Evaluaciones por Asignatura", "[4]Lista Promedio de Alumnos por Asignatura" };
+            mostrarMensaje(Opciones);
+            Respond = Console.ReadLine();
+
+            return Respond;
+        }
+
+        private static void mostrarMensaje(string[] opciones)
+        {
+            foreach (var opc in opciones)
+            {
+                Console.WriteLine(opc);
+            }
         }
 
         private static void ImprimirEvaluaciones(Escuela escuela)
@@ -160,7 +220,7 @@ namespace CorEscuela
             WriteLine(Diccionario[4]);
         }
 
-        
+
 
     }
 }

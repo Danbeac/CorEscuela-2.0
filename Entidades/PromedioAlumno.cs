@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace CoreEscuela.Entidades
+namespace CorEscuela.Entidades
 {
 
-    public class AlumnoPromedio
+    public class PromedioAlumno
     {
         public float promedio;
         public string alumnoid;

@@ -39,7 +39,7 @@ namespace CorEscuela.App
             ListEvaluaciones = GetListaEvaluaciones();
 
             return (from Evaluación Eval in ListEvaluaciones
-                select Eval.Asignatura.Nombre).Distinct();
+                        select Eval.Asignatura.Nombre).Distinct();
         }
 
         public IEnumerable<string> GetListaAsignaturas()
@@ -68,7 +68,7 @@ namespace CorEscuela.App
         public Dictionary<string, IEnumerable<object>> GetPromeAlumnPorAsignatura()
         {
             var rta = new Dictionary<string, IEnumerable<object>>();
-            var dicEvalXAsig = GetDicEvaluaXAsig();
+            var dicEvalXAsig = GetEvalXAsig();
 
             foreach (var asigConEval in dicEvalXAsig)
             {
@@ -77,7 +77,7 @@ namespace CorEscuela.App
                                  eval.Alumno.UniqueId,
                                  eval.Alumno.Nombre}
                             into grupoEvalsAlumno
-                            select new AlumnoPromedio
+                            select new PromedioAlumno
                             { 
                                 alumnoid = grupoEvalsAlumno.Key.UniqueId,
                                 alumnoNombre = grupoEvalsAlumno.Key.Nombre,
