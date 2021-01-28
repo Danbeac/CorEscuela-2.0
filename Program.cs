@@ -12,13 +12,15 @@ namespace CorEscuela
     {
         static void Main(string[] args)
         {
+
+
+            var Engine = new EscuelaEngine();
+            Engine.Inicializar();
+            Printer.PrintTitle("BIENVENIDOS A LA ESCUELA");
+            Printer.Beep();
+
             string rta = SeleccionReporte();
             GenerarReporte(rta);
-
-            // var Engine = new EscuelaEngine();
-            // Engine.Inicializar();
-            // Printer.PrintTitle("BIENVENIDOS A LA ESCUELA");
-            // Printer.Beep();
 
             // var lista = Engine.GetObjectosEscuela();
 
